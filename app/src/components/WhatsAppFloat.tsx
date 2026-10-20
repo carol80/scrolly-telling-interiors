@@ -1,4 +1,4 @@
-import { WHATSAPP_CHAT_URL } from '../content/site';
+import { BRAND, WHATSAPP_CHAT_URL } from '../content/site';
 
 // FEATURE 3 anchor #2 — floating WhatsApp badge, bottom-right.
 // A plain <a> to the official Click-to-Chat URL: no SDK, no script.
@@ -10,7 +10,7 @@ export function WhatsAppFloat() {
       target="_blank"
       rel="noopener noreferrer"
       className="cd-wa-float"
-      aria-label="Chat with Celestial Designs on WhatsApp"
+      aria-label={`Chat with ${BRAND.name} on WhatsApp`}
     >
       <span className="cd-wa-ring" aria-hidden="true" />
       <svg viewBox="0 0 24 24" role="img" aria-hidden="true" focusable="false">

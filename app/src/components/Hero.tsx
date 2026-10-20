@@ -1,10 +1,12 @@
+import { BRAND } from '../content/site';
+
 export function Hero() {
   return (
     <section data-hero className="relative flex min-h-[100svh] items-end px-6 pb-24 sm:pb-28 md:px-16">
       <div className="pointer-events-none absolute inset-x-0 bottom-0 h-[62%] bg-gradient-to-t from-linen/85 via-linen/35 to-transparent" />
       <div data-hero-inner className="relative max-w-2xl">
         <p data-hero-line className="font-sans text-[11px] font-semibold tracking-[0.22em] text-charcoal/75 uppercase md:text-xs">
-          Celestial Designs · Interiors for real life
+          {BRAND.name} · {BRAND.tagline}
         </p>
         <h1
           data-hero-line

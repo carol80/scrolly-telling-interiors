@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { WHATSAPP_CHAT_URL } from '../content/site';
+import { BRAND, WHATSAPP_CHAT_URL } from '../content/site';
 
 const NAV_LINKS = [
   { href: '#projects', label: 'Projects' },
@@ -23,7 +23,7 @@ export function SiteHeader() {
           className="shrink-0 font-serif text-base tracking-wide text-charcoal md:text-lg"
           onClick={close}
         >
-          Celestial Designs
+          {BRAND.name}
         </a>
 
         {/* Desktop links — hidden below 768px, where the burger takes over */}

@@ -8,7 +8,7 @@ import { SiteHeader } from './components/SiteHeader';
 import { ProjectGallery } from './components/ProjectGallery';
 import { WhatsAppFloat } from './components/WhatsAppFloat';
 import { InquiryForm } from './contact/InquiryForm';
-import { WHATSAPP_CHAT_URL } from './content/site';
+import { WHATSAPP_CHAT_URL, BRAND } from './content/site';
 
 const PROCESS_STEPS = [
   {
@@ -138,7 +138,7 @@ export function App() {
           </nav>
           <p className="font-serif text-base text-charcoal/75">A home that keeps its rhythm.</p>
           <p className="mt-2 font-sans text-[11px] tracking-[0.16em] text-charcoal/55 uppercase">
-            Celestial Designs · Residential interiors · © 2026
+            {BRAND.name} · {BRAND.footerLine} · © 2026
           </p>
         </footer>
       </main>

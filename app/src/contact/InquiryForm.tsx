@@ -1,5 +1,5 @@
 import { useState, type FormEvent } from 'react';
-import { buildWhatsAppUrl } from '../content/site';
+import { BRAND, buildWhatsAppUrl } from '../content/site';
 
 const TIMELINES = [
   'Within 3 months',
@@ -22,7 +22,7 @@ export function InquiryForm() {
     // Structured WhatsApp message — *asterisks* render as bold in WhatsApp,
     // \n becomes a real line break via encodeURIComponent.
     const lines: Array<string | null> = [
-      'Hi Celestial Designs!',
+      `Hi ${BRAND.name}!`,
       '',
       'I just viewed your portfolio on your website and would like to enquire about a home interior consultation.',
       '',
@@ -56,7 +56,7 @@ export function InquiryForm() {
           Didn&rsquo;t open?{' '}
           <a
             href={buildWhatsAppUrl(
-              'Hi Celestial Designs! I would like to enquire about a home interior consultation.',
+              `Hi ${BRAND.name}! I would like to enquire about a home interior consultation.`,
             )}
             target="_blank"
             rel="noopener noreferrer"
