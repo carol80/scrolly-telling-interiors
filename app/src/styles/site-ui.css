@@ -1,0 +1,521 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   Celestial Designs — feature UI layer (Features 1, 2, 3)
+   Every selector is .cd-prefixed so nothing here can override existing rules.
+   Theme colors come from the tokens defined in index.css (@theme).
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ── FEATURE 1 · frosted-glass sticky header ──────────────────────────────── */
+
+/* Glassmorphism bar: the 3D scene and cards slide visibly beneath the blur. */
+.cd-header-glass {
+  background-color: color-mix(in srgb, var(--color-linen) 80%, transparent);
+  -webkit-backdrop-filter: blur(10px) saturate(1.15);
+  backdrop-filter: blur(10px) saturate(1.15);
+  border-bottom: 1px solid color-mix(in srgb, var(--color-charcoal) 8%, transparent);
+}
+
+/* High-contrast pill CTA (header + reused for lightbox buttons' shape). */
+.cd-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.55rem 1.1rem;
+  border-radius: 9999px;
+  background-color: var(--color-terracotta);
+  color: var(--color-linen);
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  box-shadow: 0 10px 24px -12px color-mix(in srgb, var(--color-terracotta) 70%, transparent);
+  transition:
+    transform 0.2s ease,
+    background-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+.cd-cta:hover {
+  background-color: color-mix(in srgb, var(--color-terracotta) 88%, black);
+  transform: translateY(-1px);
+  box-shadow: 0 14px 28px -12px color-mix(in srgb, var(--color-terracotta) 75%, transparent);
+}
+.cd-cta:focus-visible {
+  outline: 2px solid var(--color-charcoal);
+  outline-offset: 2px;
+}
+
+/* Hamburger icon — three bars morph into an X when .cd-menu-open is set. */
+.cd-burger {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 9999px;
+  border: 1px solid color-mix(in srgb, var(--color-charcoal) 15%, transparent);
+  background: color-mix(in srgb, var(--color-linen) 60%, transparent);
+  cursor: pointer;
+}
+.cd-burger span {
+  display: block;
+  width: 1.05rem;
+  height: 1.5px;
+  border-radius: 1px;
+  background-color: var(--color-charcoal);
+  transition:
+    transform 0.25s ease,
+    opacity 0.2s ease;
+}
+.cd-menu-open .cd-burger span:nth-child(1) {
+  transform: translateY(6.5px) rotate(45deg);
+}
+.cd-menu-open .cd-burger span:nth-child(2) {
+  opacity: 0;
+}
+.cd-menu-open .cd-burger span:nth-child(3) {
+  transform: translateY(-6.5px) rotate(-45deg);
+}
+
+/* Mobile dropdown — always mounted; slides+fades in below the glass bar. */
+.cd-mobile-nav {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0.75rem 1.25rem 1.1rem;
+  background: color-mix(in srgb, var(--color-linen) 88%, transparent);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid color-mix(in srgb, var(--color-charcoal) 8%, transparent);
+  opacity: 0;
+  transform: translateY(-8px);
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    opacity 0.25s ease,
+    transform 0.25s ease,
+    visibility 0s linear 0.25s;
+}
+.cd-menu-open .cd-mobile-nav {
+  opacity: 1;
+  transform: none;
+  visibility: visible;
+  pointer-events: auto;
+  transition-delay: 0s;
+}
+.cd-mobile-nav a {
+  padding: 0.85rem 0.5rem;
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-charcoal);
+  border-bottom: 1px solid color-mix(in srgb, var(--color-charcoal) 6%, transparent);
+}
+.cd-mobile-nav a:last-child {
+  border-bottom: 0;
+}
+.cd-mobile-nav a:hover {
+  color: var(--color-terracotta);
+}
+
+/* ── FEATURE 3 · floating WhatsApp badge ──────────────────────────────────── */
+
+.cd-wa-float {
+  position: fixed;
+  right: 1.25rem;
+  bottom: 1.25rem;
+  z-index: 30; /* under the header (40) and lightbox (50), over all content */
+  display: grid;
+  place-items: center;
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 9999px;
+  background-color: #25d366; /* WhatsApp brand green */
+  color: #fff;
+  box-shadow: 0 12px 30px -10px rgba(37, 211, 102, 0.55);
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+.cd-wa-float:hover {
+  transform: translateY(-2px) scale(1.04);
+  box-shadow: 0 16px 34px -10px rgba(37, 211, 102, 0.6);
+}
+.cd-wa-float:focus-visible {
+  outline: 2px solid var(--color-charcoal);
+  outline-offset: 3px;
+}
+.cd-wa-float svg {
+  position: relative;
+  z-index: 1;
+  width: 1.75rem;
+  height: 1.75rem;
+  fill: currentColor;
+}
+
+/* Subtle expanding pulse ring behind the badge. */
+.cd-wa-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: rgba(37, 211, 102, 0.45);
+  animation: cd-wa-pulse 2.4s ease-out infinite;
+}
+@keyframes cd-wa-pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  70% {
+    transform: scale(1.55);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1.55);
+    opacity: 0;
+  }
+}
+
+/* "Chat with us" tooltip label, hover devices only. */
+.cd-wa-float::after {
+  content: 'Chat with us';
+  position: absolute;
+  right: calc(100% + 0.65rem);
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 0.5rem 0.75rem;
+  border-radius: 9999px;
+  background: color-mix(in srgb, var(--color-charcoal) 92%, transparent);
+  color: var(--color-linen);
+  font-family: var(--font-sans);
+  font-size: 0.66rem;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+.cd-wa-float:hover::after,
+.cd-wa-float:focus-visible::after {
+  opacity: 1;
+}
+@media (hover: none) {
+  .cd-wa-float::after {
+    display: none;
+  }
+}
+
+/* ── FEATURE 2 · project showcase carousel + lightbox ─────────────────────── */
+
+.cd-carousel {
+  position: relative;
+}
+
+/* Horizontal snap track — swipe/scroll natively, arrows just scrollTo(). */
+.cd-carousel-track {
+  position: relative;
+  display: flex;
+  gap: 0.65rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none; /* Firefox */
+}
+.cd-carousel-track::-webkit-scrollbar {
+  display: none; /* Chrome/Safari — the arrows + counter replace it */
+}
+.cd-slide {
+  flex: 0 0 100%;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+
+/* Fixed 16/10 frame — no layout shift while lazy images stream in. */
+.cd-frame {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  border-radius: 1rem;
+  border: 1px solid color-mix(in srgb, var(--color-charcoal) 8%, transparent);
+  background: var(--color-cream);
+  padding: 0;
+  cursor: zoom-in;
+}
+.cd-frame img,
+.cd-thumb img,
+.cd-lightbox-media img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.cd-frame:focus-visible {
+  outline-offset: -3px;
+}
+
+/* Role badge on each slide ("Wide view", "Before"...) — instant scannability. */
+.cd-slide-badge {
+  position: absolute;
+  top: 0.7rem;
+  left: 0.7rem;
+  z-index: 1;
+  padding: 0.32rem 0.6rem;
+  border-radius: 9999px;
+  background: color-mix(in srgb, var(--color-linen) 88%, transparent);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  font-family: var(--font-sans);
+  font-size: 0.58rem;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--color-charcoal) 75%, transparent);
+}
+.cd-slide-badge[data-kind='before'] {
+  color: var(--terracotta, var(--color-terracotta));
+}
+
+/* Prev / next glass arrows, shared by carousel and lightbox. */
+.cd-arrow {
+  position: absolute;
+  top: 50%;
+  translate: 0 -50%;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 2.6rem;
+  height: 2.6rem;
+  border-radius: 9999px;
+  border: 1px solid color-mix(in srgb, var(--color-charcoal) 10%, transparent);
+  background: color-mix(in srgb, var(--color-linen) 82%, transparent);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  color: var(--color-charcoal);
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    opacity 0.2s ease;
+}
+.cd-arrow svg {
+  width: 1.1rem;
+  height: 1.1rem;
+}
+.cd-arrow:hover:not(:disabled) {
+  background: var(--color-linen);
+}
+.cd-arrow:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+.cd-arrow--prev {
+  left: 0.75rem;
+}
+.cd-arrow--next {
+  right: 0.75rem;
+}
+
+/* Styled stand-in shown until a real photo is wired up in projects.ts. */
+.cd-placeholder {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 0 1rem;
+  background: linear-gradient(
+    145deg,
+    color-mix(in srgb, var(--color-oak) 30%, var(--color-cream)),
+    color-mix(in srgb, var(--color-sage) 22%, var(--color-cream))
+  );
+}
+.cd-placeholder span {
+  font-family: var(--font-sans);
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-align: center;
+  color: color-mix(in srgb, var(--color-charcoal) 55%, transparent);
+}
+
+/* Thumbnail strip — mirrors the carousel position. */
+.cd-thumbs {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+  padding: 2px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.cd-thumbs::-webkit-scrollbar {
+  display: none;
+}
+.cd-thumb {
+  position: relative;
+  flex: 0 0 auto;
+  width: 3.6rem;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border-radius: 0.5rem;
+  border: 2px solid transparent;
+  background: var(--color-cream);
+  opacity: 0.55;
+  cursor: pointer;
+  transition:
+    opacity 0.2s ease,
+    border-color 0.2s ease;
+}
+.cd-thumb:hover {
+  opacity: 0.85;
+}
+.cd-thumb[data-active='true'] {
+  opacity: 1;
+  border-color: var(--color-terracotta);
+}
+
+.cd-counter {
+  font-family: var(--font-serif);
+  font-size: 0.875rem;
+  color: color-mix(in srgb, var(--color-charcoal) 70%, transparent);
+  white-space: nowrap;
+}
+
+/* Fullscreen lightbox — sits above header and badge (z-50). */
+.cd-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: grid;
+  place-items: center;
+  padding: clamp(0.75rem, 3vw, 2.5rem);
+  background: color-mix(in srgb, var(--color-charcoal) 88%, transparent);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  animation: cd-fade-in 0.22s ease both;
+}
+.cd-lightbox-figure {
+  position: relative;
+  margin: 0;
+  width: min(100%, 64rem);
+}
+.cd-lightbox-media {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  border-radius: 0.75rem;
+  background: color-mix(in srgb, var(--color-charcoal) 60%, black);
+  animation: cd-zoom-in 0.26s ease both;
+}
+.cd-lightbox-media img {
+  object-fit: contain; /* show the whole photo, letterboxed */
+}
+.cd-lightbox-media .cd-placeholder span {
+  color: color-mix(in srgb, var(--color-linen) 75%, transparent);
+}
+.cd-lightbox-caption {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  margin-top: 0.8rem;
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: color-mix(in srgb, var(--color-linen) 85%, transparent);
+}
+.cd-lightbox-caption .cd-counter {
+  color: color-mix(in srgb, var(--color-linen) 65%, transparent);
+}
+.cd-lightbox-close {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 9999px;
+  border: 1px solid color-mix(in srgb, var(--color-linen) 25%, transparent);
+  background: color-mix(in srgb, var(--color-charcoal) 55%, transparent);
+  color: var(--color-linen);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+.cd-lightbox-close:hover {
+  background: color-mix(in srgb, var(--color-charcoal) 75%, transparent);
+}
+.cd-lightbox-close svg {
+  width: 1.15rem;
+  height: 1.15rem;
+}
+.cd-lightbox-arrow--prev {
+  left: -0.25rem;
+}
+.cd-lightbox-arrow--next {
+  right: -0.25rem;
+}
+@media (min-width: 768px) {
+  .cd-lightbox-arrow--prev {
+    left: -3.4rem;
+  }
+  .cd-lightbox-arrow--next {
+    right: -3.4rem;
+  }
+}
+
+@keyframes cd-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes cd-zoom-in {
+  from {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* ── Motion courtesy ──────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .cd-wa-ring {
+    animation: none;
+    opacity: 0;
+  }
+  .cd-mobile-nav,
+  .cd-cta,
+  .cd-wa-float,
+  .cd-arrow,
+  .cd-thumb {
+    transition: none;
+  }
+  .cd-lightbox,
+  .cd-lightbox-media {
+    animation: none;
+  }
+}

@@ -4,7 +4,11 @@ import { useSceneTimeline } from './scene/useSceneTimeline';
 import { PHASES } from './content/phases';
 import { Hero } from './components/Hero';
 import { PhaseCard } from './components/PhaseCard';
+import { SiteHeader } from './components/SiteHeader';
+import { ProjectGallery } from './components/ProjectGallery';
+import { WhatsAppFloat } from './components/WhatsAppFloat';
 import { InquiryForm } from './contact/InquiryForm';
+import { WHATSAPP_CHAT_URL } from './content/site';
 
 const PROCESS_STEPS = [
   {
@@ -41,25 +45,7 @@ export function App() {
         <div data-progress className="h-full w-full origin-left scale-x-0 bg-terracotta" />
       </div>
 
-      <header className="fixed inset-x-0 top-0 z-20 flex items-center justify-between px-5 py-4 sm:px-8 md:px-16 md:py-5">
-        <a href="#top" className="font-serif text-base tracking-wide text-charcoal md:text-lg">
-          Celestial Designs
-        </a>
-        <nav className="hidden items-center gap-8 font-sans text-xs font-semibold tracking-[0.16em] text-charcoal/70 uppercase md:flex">
-          <a href="#story" className="transition-colors hover:text-terracotta">
-            The day
-          </a>
-          <a href="#process" className="transition-colors hover:text-terracotta">
-            Process
-          </a>
-        </nav>
-        <a
-          href="#contact"
-          className="rounded-full border border-charcoal/20 bg-linen/40 px-4 py-2 font-sans text-xs font-semibold tracking-[0.12em] text-charcoal uppercase backdrop-blur-sm transition-colors hover:border-terracotta hover:text-terracotta md:px-5"
-        >
-          Start a project
-        </a>
-      </header>
+      <SiteHeader />
 
       <main ref={storyRef} id="top" className="relative z-10">
         <Hero />
@@ -70,13 +56,15 @@ export function App() {
           ))}
         </div>
 
+        <ProjectGallery />
+
         <section
           id="contact"
           data-contact
           className="relative flex min-h-[100svh] items-center px-5 py-28 sm:px-8 md:px-16"
         >
           <div className="mx-auto grid w-full max-w-5xl gap-10 md:grid-cols-[1fr_1.1fr] md:gap-14">
-            <div data-reveal className="flex flex-col justify-center">
+            <div id="process" data-reveal className="flex scroll-mt-28 flex-col justify-center">
               <p className="font-sans text-[11px] font-semibold tracking-[0.22em] text-sage uppercase md:text-xs">
                 Trust & reality
               </p>
@@ -126,12 +114,36 @@ export function App() {
         </section>
 
         <footer className="relative z-10 px-6 pb-14 pt-6 text-center">
+          <nav
+            aria-label="Footer"
+            className="mb-5 flex flex-wrap items-center justify-center gap-x-7 gap-y-2 font-sans text-[11px] font-semibold tracking-[0.16em] text-charcoal/60 uppercase"
+          >
+            <a href="#projects" className="transition-colors hover:text-terracotta">
+              Projects
+            </a>
+            <a href="#process" className="transition-colors hover:text-terracotta">
+              Process
+            </a>
+            <a href="#contact" className="transition-colors hover:text-terracotta">
+              Contact
+            </a>
+            <a
+              href={WHATSAPP_CHAT_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="transition-colors hover:text-terracotta"
+            >
+              WhatsApp
+            </a>
+          </nav>
           <p className="font-serif text-base text-charcoal/75">A home that keeps its rhythm.</p>
           <p className="mt-2 font-sans text-[11px] tracking-[0.16em] text-charcoal/55 uppercase">
             Celestial Designs · Residential interiors · © 2026
           </p>
         </footer>
       </main>
+
+      <WhatsAppFloat />
     </>
   );
 }

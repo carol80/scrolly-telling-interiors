@@ -1,4 +1,5 @@
 import { useState, type FormEvent } from 'react';
+import { buildWhatsAppUrl } from '../content/site';
 
 const TIMELINES = [
   'Within 3 months',
@@ -7,23 +8,64 @@ const TIMELINES = [
   'Over a year out',
 ];
 
-type Status = 'idle' | 'sending' | 'sent';
-
 export function InquiryForm() {
-  const [status, setStatus] = useState<Status>('idle');
+  const [sentTo, setSentTo] = useState<string | null>(null);
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setStatus('sending');
-    // No backend is wired up yet. Replace this with the real endpoint.
-    window.setTimeout(() => setStatus('sent'), 600);
+    const data = new FormData(e.currentTarget);
+    const name = String(data.get('name') ?? '').trim();
+    const email = String(data.get('email') ?? '').trim();
+    const timeline = String(data.get('timeline') ?? '').trim();
+    const ideas = String(data.get('ideas') ?? '').trim();
+
+    // Structured WhatsApp message — *asterisks* render as bold in WhatsApp,
+    // \n becomes a real line break via encodeURIComponent.
+    const lines: Array<string | null> = [
+      'Hi Celestial Designs!',
+      '',
+      'I just viewed your portfolio on your website and would like to enquire about a home interior consultation.',
+      '',
+      `*Name:* ${name}`,
+      `*Email:* ${email}`,
+      `*Project timeline:* ${timeline}`,
+      ideas ? `*Ideas for the home:* ${ideas}` : null,
+    ];
+    const message = lines.filter((line): line is string => line !== null).join('\n');
+
+    // Open WhatsApp in a new tab. window.open with 'noopener' can return null
+    // even on success in some browsers, so drop the opener manually instead
+    // and only fall back to a same-tab redirect when the popup was blocked.
+    const tab = window.open(buildWhatsAppUrl(message), '_blank');
+    if (tab) {
+      tab.opener = null;
+    } else {
+      window.location.href = buildWhatsAppUrl(message);
+    }
+    setSentTo(name);
   };
 
-  if (status === 'sent') {
+  if (sentTo !== null) {
     return (
-      <p className="font-serif text-xl text-charcoal">
-        Thank you. Your note is on its way, and we will be in touch.
-      </p>
+      <div>
+        <p className="font-serif text-xl text-charcoal">
+          Thank you{sentTo ? `, ${sentTo}` : ''}. WhatsApp should have opened with
+          your note ready to send — we reply within two working days.
+        </p>
+        <p className="mt-3 font-sans text-sm text-charcoal/65">
+          Didn&rsquo;t open?{' '}
+          <a
+            href={buildWhatsAppUrl(
+              'Hi Celestial Designs! I would like to enquire about a home interior consultation.',
+            )}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-semibold text-terracotta underline underline-offset-4 transition-opacity hover:opacity-80"
+          >
+            Tap here to chat with us directly.
+          </a>
+        </p>
+      </div>
     );
   }
 
@@ -67,11 +109,13 @@ export function InquiryForm() {
 
       <button
         type="submit"
-        disabled={status === 'sending'}
-        className="w-full rounded-full bg-terracotta px-6 py-3 font-sans text-base font-semibold text-linen transition-opacity hover:opacity-90 disabled:opacity-60"
+        className="w-full rounded-full bg-terracotta px-6 py-3 font-sans text-base font-semibold text-linen transition-opacity hover:opacity-90"
       >
-        {status === 'sending' ? 'Sending...' : 'Start the conversation'}
+        Start the conversation
       </button>
+      <p className="text-center font-sans text-xs leading-relaxed text-charcoal/55">
+        Opens WhatsApp with your note pre-filled — nothing is stored on this site.
+      </p>
     </form>
   );
 }
