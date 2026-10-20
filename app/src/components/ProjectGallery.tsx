@@ -72,7 +72,10 @@ function ProjectShowcase({ project, eagerFirst, onOpen }: ShowcaseProps) {
   };
 
   return (
-    <article className="cd-project" data-reveal>
+    <article
+      data-reveal
+      className="cd-project w-full rounded-2xl border border-charcoal/5 bg-linen/85 p-6 shadow-[0_24px_60px_-30px_rgba(43,39,36,0.4)] backdrop-blur-md sm:p-8 md:rounded-3xl md:p-10"
+    >
       <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
         <h3 className="font-serif tracking-[-0.015em] text-charcoal text-[clamp(1.4rem,3.2vw,1.9rem)] leading-tight">
           {project.name}
@@ -269,21 +272,15 @@ export function ProjectGallery() {
       aria-labelledby="projects-title"
       className="relative scroll-mt-24 px-5 py-24 sm:px-8 md:px-16 md:py-32"
     >
-      {/* Solid linen panel: text must always sit on a readable surface, never
-          directly on the 3D render. The gradient edges above/below blend the
-          panel softly into the scene as it scrolls past. */}
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-linen" />
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 -top-24 h-24 bg-gradient-to-b from-transparent to-linen"
-      />
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 -bottom-24 h-24 bg-gradient-to-t from-transparent to-linen"
-      />
-
-      <div className="relative mx-auto w-full max-w-6xl">
-        <div data-reveal className="max-w-2xl">
+      {/* Deliberately NO full-bleed backdrop here: the 3D scene — and its
+          evening-light pass — must stay visible behind this stretch of scroll.
+          Readability comes from frosted-glass cards around every text block,
+          the same recipe as the story cards (bg-linen/85 + backdrop-blur). */}
+      <div className="mx-auto w-full max-w-6xl">
+        <div
+          data-reveal
+          className="max-w-2xl rounded-2xl border border-charcoal/5 bg-linen/85 p-6 shadow-[0_24px_60px_-30px_rgba(43,39,36,0.4)] backdrop-blur-md sm:p-8 md:rounded-3xl"
+        >
           <p className="font-sans text-[11px] font-semibold tracking-[0.22em] text-sage uppercase md:text-xs">
             Selected work
           </p>
