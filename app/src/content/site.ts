@@ -13,7 +13,7 @@
 // ═════════════════════════════════════════════════════════════════════════════
 
 export const BRAND = {
-  name: 'JV Interiors',
+  name: 'JJ Designer Studios',
   tagline: 'Interiors for real life',
   footerLine: 'Residential interiors',
 } as const;
